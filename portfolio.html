@@ -1,31 +1,196 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>موقع حمزة</title>
-    <style>
-        body { 
-            font-family: Arial; 
-            text-align: center; 
-            padding: 50px; 
-            background: #f0f0f0;
-        }
-        .btn {
-            display: block;
-            padding: 15px;
-            margin: 10px;
-            background: blue;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض الأعمال - موقع حمزة</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>مرحباً! موقع حمزة يعمل الآن 🎉</h1>
-    <a href="home.html" class="btn">الصفحة الرئيسية</a>
-    <a href="portfolio.html" class="btn">معرض الأعمال</a>
-    <a href="services.html" class="btn">الخدمات</a>
-    <a href="contact.html" class="btn">اتصل بنا</a>
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">🏠 الرئيسية</a>
+        <a href="home.html" class="nav-link">📄 Home</a>
+        <a href="portfolio.html" class="nav-link active">💼 معرض الأعمال</a>
+        <a href="services.html" class="nav-link">🔧 الخدمات</a>
+        <a href="contact.html" class="nav-link">📞 اتصل بنا</a>
+    </nav>
+    
+    <div class="container">
+        <h1>معرض الأعمال 💼</h1>
+        <p>هنا أعرض أبرز مشاريعي وأعمالي السابقة</p>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <h3>🌐 موقع تجاري</h3>
+                <p>موقع إلكتروني متكامل للتجارة الإلكترونية</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <h3>📱 تطبيق ويب</h3>
+                <p>تطبيق ويب تفاعلي لإدارة المهام</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Node.js</span>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <h3>🎨 تصميم واجهات</h3>
+                <p>تصميم واجهات مستخدم جذابة وسهلة الاستخدام</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">UI/UX</span>
+                    <span class="tech-tag">Figma</span>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <h3>🛒 متجر إلكتروني</h3>
+                <p>منصة تسوق عبر الإنترنت</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">E-commerce</span>
+                    <span class="tech-tag">Payment</span>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <h3>📊 لوحة تحكم</h3>
+                <p>نظام إدارة وتحليل البيانات</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Dashboard</span>
+                    <span class="tech-tag">Charts</span>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <h3>🔐 نظام أمني</h3>
+                <p>حلول أمنية وحماية للمواقع</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Security</span>
+                    <span class="tech-tag">Authentication</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="achievements">
+            <h2>إنجازاتي 📈</h2>
+            <div class="stats">
+                <div class="stat">
+                    <h3>50+</h3>
+                    <p>مشروع مكتمل</p>
+                </div>
+                <div class="stat">
+                    <h3>30+</h3>
+                    <p>عميل سعيد</p>
+                </div>
+                <div class="stat">
+                    <h3>3+</h3>
+                    <p>سنوات خبرة</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 موقع حمزة. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <style>
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .portfolio-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            border-top: 4px solid #667eea;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .portfolio-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .portfolio-item p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .achievements {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat h3 {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </body>
 </html>
