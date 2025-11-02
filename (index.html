@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع حمزة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        header {
+            padding: 40px 0;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .nav-btn {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 2px solid white;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+        .content-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 موقع حمزة</h1>
+            <p>مرحباً بك في موقعي الشخصي</p>
+        </header>
+
+        <div class="nav-buttons">
+            <a href="#home" class="nav-btn">🏠 الرئيسية</a>
+            <a href="#portfolio" class="nav-btn">💼 المعرض</a>
+            <a href="#services" class="nav-btn">🔧 الخدمات</a>
+            <a href="#contact" class="nav-btn">📞 اتصل بي</a>
+        </div>
+
+        <!-- قسم الرئيسية -->
+        <section id="home" class="content-section">
+            <h2>مرحباً! 👋</h2>
+            <p>أنا حمزة، وأعمل على تطوير هذا الموقع.</p>
+            <p>هذا موقع تجريبي وسيتم تطويره قريباً.</p>
+        </section>
+
+        <!-- قسم المعرض -->
+        <section id="portfolio" class="content-section" style="display: none;">
+            <h2>معرض الأعمال 💼</h2>
+            <p>هنا سيتم عرض مشاريعي السابقة:</p>
+            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                <h3>مشروع ١</h3>
+                <p>وصف المشروع الأول</p>
+            </div>
+        </section>
+
+        <!-- قسم الخدمات -->
+        <section id="services" class="content-section" style="display: none;">
+            <h2>الخدمات 🔧</h2>
+            <p>الخدمات التي أقدمها:</p>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 10px; background: rgba(255,255,255,0.1); margin: 5px; border-radius: 5px;">
+                    تطوير مواقع الويب
+                </li>
+                <li style="padding: 10px; background: rgba(255,255,255,0.1); margin: 5px; border-radius: 5px;">
+                    تصميم واجهات المستخدم
+                </li>
+            </ul>
+        </section>
+
+        <!-- قسم الاتصال -->
+        <section id="contact" class="content-section" style="display: none;">
+            <h2>اتصل بي 📞</h2>
+            <p>يمكنك التواصل معي عبر:</p>
+            <div style="margin: 20px 0;">
+                <p>📧 example@email.com</p>
+                <p>📱 +1234567890</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2024 موقع حمزة. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+
+    <script>
+        // كود بسيط للتنقل بين الأقسام
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                
+                // إخفاء جميع الأقسام
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // إظهار القسم المطلوب
+                document.getElementById(targetId).style.display = 'block';
+            });
+        });
+
+        // إظهار القسم الرئيسي عند التحميل
+        document.getElementById('home').style.display = 'block';
+    </script>
+</body>
+</html>
