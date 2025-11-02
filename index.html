@@ -5,19 +5,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>موقع حمزة - الرئيسية</title>
     <link rel="stylesheet" href="index.css">
+    <style>
+        .hero {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        .hero-title {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 50px 0;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .quick-links {
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .quick-link {
+            background: white;
+            padding: 25px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            border: 2px solid #e9ecef;
+        }
+        
+        .quick-link:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .quick-link .icon {
+            font-size: 2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">الرئيسية</a>
-        <a href="home.html">Home</a>
-        <a href="portfolio.html">معرض الأعمال</a>
-        <a href="services.html">الخدمات</a>
-        <a href="contact.html">اتصل بنا</a>
+    <nav class="navbar">
+        <a href="index.html" class="nav-link active">🏠 الرئيسية</a>
+        <a href="home.html" class="nav-link">📄 Home</a>
+        <a href="portfolio.html" class="nav-link">💼 معرض الأعمال</a>
+        <a href="services.html" class="nav-link">🔧 الخدمات</a>
+        <a href="contact.html" class="nav-link">📞 اتصل بنا</a>
     </nav>
     
     <div class="container">
-        <h1>مرحباً بك في موقع حمزة</h1>
-        <p>هذا الموقع يعمل بنجاح على GitHub Pages</p>
+        <div class="hero">
+            <h1 class="hero-title">مرحباً بك في موقع حمزة 🚀</h1>
+            <p class="hero-subtitle">هذا الموقع يعمل بنجاح على GitHub Pages - تم التطوير بحب ❤️</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>سريع</h3>
+                <p>موقع سريع الاستجابة</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>متجاوب</h3>
+                <p>يعمل على جميع الأجهزة</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>حديث</h3>
+                <p>تصميم عصري وجذاب</p>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <h2>استكشف الموقع</h2>
+            <div class="links-grid">
+                <a href="portfolio.html" class="quick-link">
+                    <span class="icon">💼</span>
+                    <span>معرض الأعمال</span>
+                </a>
+                <a href="services.html" class="quick-link">
+                    <span class="icon">🔧</span>
+                    <span>الخدمات</span>
+                </a>
+                <a href="contact.html" class="quick-link">
+                    <span class="icon">📞</span>
+                    <span>اتصل بنا</span>
+                </a>
+                <a href="home.html" class="quick-link">
+                    <span class="icon">📄</span>
+                    <span>صفحة Home</span>
+                </a>
+            </div>
+        </div>
     </div>
+
+    <footer class="footer">
+        <p>© 2024 موقع حمزة. تم التطوير بحب ❤️</p>
+    </footer>
 </body>
 </html>
