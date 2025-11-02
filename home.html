@@ -7,17 +7,112 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <nav>
-        <a href="index.html">الرئيسية</a>
-        <a href="home.html">Home</a>
-        <a href="portfolio.html">معرض الأعمال</a>
-        <a href="services.html">الخدمات</a>
-        <a href="contact.html">اتصل بنا</a>
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">🏠 الرئيسية</a>
+        <a href="home.html" class="nav-link active">📄 Home</a>
+        <a href="portfolio.html" class="nav-link">💼 معرض الأعمال</a>
+        <a href="services.html" class="nav-link">🔧 الخدمات</a>
+        <a href="contact.html" class="nav-link">📞 اتصل بنا</a>
     </nav>
     
     <div class="container">
-        <h1>الصفحة الرئيسية</h1>
+        <h1>الصفحة الرئيسية 🏠</h1>
         <p>مرحباً بك في الصفحة الرئيسية لموقع حمزة</p>
+        
+        <div class="content-section">
+            <h2>👋 من أنا؟</h2>
+            <p>أنا حمزة، مطور ويب متخصص في إنشاء مواقع إلكترونية رائعة وتطبيقات ويب حديثة. أسعى دائماً لتقديم أفضل الحلول التقنية لعملائي.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>💼 خبراتي</h2>
+            <ul class="skills-list">
+                <li>✅ تطوير مواقع الويب</li>
+                <li>✅ برمجة تطبيقات الويب</li>
+                <li>✅ تصميم واجهات المستخدم</li>
+                <li>✅ تطوير حلول تقنية مخصصة</li>
+                <li>✅ تحسين أداء المواقع</li>
+                <li>✅ دعم فني واستشارات تقنية</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 رؤيتي</h2>
+            <p>أهدف إلى إنشاء تجارب رقمية استثنائية تلبي احتياجات المستخدمين وتتفوق على توقعاتهم، مع الالتزام بأعلى معايير الجودة والأداء.</p>
+        </div>
+
+        <div class="cta-section">
+            <h2>🚀 مستعد للبدء؟</h2>
+            <p>لنعمل معاً على تحويل أفكارك إلى واقع ملموس</p>
+            <div class="cta-buttons">
+                <a href="portfolio.html" class="cta-button">📁 شاهد أعمالي</a>
+                <a href="contact.html" class="cta-button">📞 تواصل معي</a>
+            </div>
+        </div>
     </div>
+
+    <footer class="footer">
+        <p>© 2024 موقع حمزة. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <style>
+        .skills-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .skills-list li {
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-right: 4px solid #667eea;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .skills-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </body>
 </html>
