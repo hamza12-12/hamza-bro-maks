@@ -7,17 +7,285 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <nav>
-        <a href="index.html">الرئيسية</a>
-        <a href="home.html">Home</a>
-        <a href="portfolio.html">معرض الأعمال</a>
-        <a href="services.html">الخدمات</a>
-        <a href="contact.html">اتصل بنا</a>
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">🏠 الرئيسية</a>
+        <a href="home.html" class="nav-link">📄 Home</a>
+        <a href="portfolio.html" class="nav-link">💼 معرض الأعمال</a>
+        <a href="services.html" class="nav-link">🔧 الخدمات</a>
+        <a href="contact.html" class="nav-link active">📞 اتصل بنا</a>
     </nav>
     
     <div class="container">
-        <h1>اتصل بنا</h1>
-        <p>يمكنك التواصل معنا عبر المعلومات التالية</p>
+        <h1>اتصل بنا 📞</h1>
+        <p class="contact-intro">نحن هنا لمساعدتك! تواصل معنا عبر أي من الطرق التالية</p>
+        
+        <div class="contact-methods">
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3>البريد الإلكتروني</h3>
+                <p>hamza@example.com</p>
+                <a href="mailto:hamza@example.com" class="contact-link">إرسال بريد</a>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">📱</div>
+                <h3>الهاتف</h3>
+                <p>+966 50 123 4567</p>
+                <a href="tel:+966501234567" class="contact-link">اتصال</a>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3>العنوان</h3>
+                <p>المملكة العربية السعودية</p>
+                <span class="contact-link">زيارة</span>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">💼</div>
+                <h3>لينكد إن</h3>
+                <p>Hamza Profile</p>
+                <a href="#" class="contact-link">متابعة</a>
+            </div>
+        </div>
+
+        <div class="contact-form-section">
+            <h2>📨 أرسل رسالة</h2>
+            <p>أترك رسالتك وسنرد عليك في أقرب وقت</p>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">الاسم الكامل *</label>
+                    <input type="text" id="name" name="name" required placeholder="أدخل اسمك الكريم">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني *</label>
+                    <input type="email" id="email" name="email" required placeholder="example@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+966 50 123 4567">
+                </div>
+
+                <div class="form-group">
+                    <label for="service">نوع الخدمة</label>
+                    <select id="service" name="service">
+                        <option value="">اختر الخدمة</option>
+                        <option value="web">تطوير مواقع</option>
+                        <option value="app">تطبيقات</option>
+                        <option value="design">تصميم</option>
+                        <option value="consultation">استشارة</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">الرسالة *</label>
+                    <textarea id="message" name="message" rows="6" required placeholder="أكتب رسالتك هنا..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <span>إرسال الرسالة</span>
+                    <span class="send-icon">✈️</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="faq-section">
+            <h2>❓ أسئلة شائعة</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>كم تستغرق مدة تنفيذ المشروع؟</h3>
+                    <p>تختلف حسب حجم المشروع، لكن معظم المشاريع تستغرق من 2 إلى 8 أسابيع</p>
+                </div>
+                <div class="faq-item">
+                    <h3>هل تقدمون دعم فني بعد التسليم؟</h3>
+                    <p>نعم، نقدم دعم فني لمدة 3 أشهر مجاناً بعد تسليم المشروع</p>
+                </div>
+                <div class="faq-item">
+                    <h3>ما هي طرق الدفع المتاحة؟</h3>
+                    <p>نقبل التحويل البنكي، وبايبال، ومدى، وبطاقات الائتمان</p>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <footer class="footer">
+        <p>© 2024 موقع حمزة. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <style>
+        .contact-intro {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .contact-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .contact-card p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .contact-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .contact-form-section {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 50px 0;
+        }
+
+        .contact-form {
+            max-width: 800px;
+            margin: 30px auto 0;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-icon {
+            font-size: 1.2em;
+        }
+
+        .faq-section {
+            margin-top: 50px;
+        }
+
+        .faq-list {
+            margin-top: 30px;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .faq-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .faq-item p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .contact-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form-section {
+                padding: 20px;
+            }
+        }
+    </style>
 </body>
 </html>
