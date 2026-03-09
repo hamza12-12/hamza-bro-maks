@@ -1,149 +1,803 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع حمزة - الرئيسية</title>
-   <link rel="stylesheet" href="css/style.css">
-    <style>
-        .hero {
-            text-align: center;
-            padding: 50px 0;
-        }
-        
-        .hero-title {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.3em;
-            color: #666;
-            margin-bottom: 40px;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 50px 0;
-        }
-        
-        .feature-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px 20px;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-        
-        .quick-links {
-            margin-top: 50px;
-            text-align: center;
-        }
-        
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .quick-link {
-            background: white;
-            padding: 25px 15px;
-            border-radius: 10px;
-            text-decoration: none;
-            color: #333;
-            transition: all 0.3s ease;
-            border: 2px solid #e9ecef;
-        }
-        
-        .quick-link:hover {
-            border-color: #667eea;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .quick-link .icon {
-            font-size: 2em;
-            display: block;
-            margin-bottom: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sequence Diagram — Auth Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0f1a;
+    --surface: #111827;
+    --border: #1e293b;
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --accent3: #34d399;
+    --accent4: #fb923c;
+    --danger: #f87171;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  header {
+    margin-bottom: 40px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(56,189,248,0.3);
+    background: rgba(56,189,248,0.07);
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+    align-items: center;
+  }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0b0f1a;
+    border-color: var(--accent);
+  }
+  .btn-primary:hover { background: #7dd3fc; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border-color: var(--border);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+  .scenario-picker {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .scenario-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .scenario-btn:hover, .scenario-btn.active {
+    color: #fff;
+    border-color: var(--accent2);
+    background: rgba(129,140,248,0.12);
+  }
+
+  /* Diagram Container */
+  .diagram-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 120px rgba(56,189,248,0.04);
+  }
+
+  .diagram-topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #f87171; }
+  .dot-y { background: #fbbf24; }
+  .dot-g { background: #34d399; }
+
+  .topbar-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 8px;
+  }
+
+  .diagram-body {
+    padding: 32px 24px;
+    overflow-x: auto;
+  }
+
+  /* Participants */
+  .participants-row {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .participant {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+  }
+
+  .participant-box {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    border: 1.5px solid;
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+  }
+
+  .participant-label {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-family: var(--mono);
+  }
+
+  .lifeline {
+    width: 1px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--border) 0px,
+      var(--border) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    transition: height 0.6s ease;
+  }
+
+  /* Messages area */
+  .messages-area {
+    position: relative;
+    margin-top: 0;
+  }
+
+  .step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .step.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Arrow */
+  .arrow-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding: 0 8px;
+  }
+
+  .step-meta {
+    position: absolute;
+    left: -8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    text-align: right;
+  }
+
+  svg.arrow-svg {
+    width: 100%;
+    height: 52px;
+    overflow: visible;
+  }
+
+  /* Notes */
+  .note {
+    position: absolute;
+    right: 0;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 8px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(6px);
+    transition: all 0.3s ease 0.1s;
+    pointer-events: none;
+  }
+
+  .step.visible .note {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Step details panel */
+  .detail-panel {
+    margin-top: 28px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.25);
+    padding: 16px 20px;
+    min-height: 72px;
+    transition: all 0.3s ease;
+  }
+
+  .detail-step-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  .detail-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .detail-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .detail-code {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent3);
+    background: rgba(52,211,153,0.06);
+    border: 1px solid rgba(52,211,153,0.15);
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-top: 8px;
+    display: inline-block;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .legend-line {
+    width: 28px;
+    height: 2px;
+  }
+
+  .progress-bar {
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 1px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+</style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="index.html" class="nav-link active">🏠 الرئيسية</a>
-        <a href="home.html" class="nav-link">📄 Home</a>
-        <a href="portfolio.html" class="nav-link">💼 معرض الأعمال</a>
-        <a href="services.html" class="nav-link">🔧 الخدمات</a>
-        <a href="contact.html" class="nav-link">📞 اتصل بنا</a>
-    </nav>
-    
-    <div class="container">
-        <div class="hero">
-            <h1 class="hero-title">مرحباً بك في موقع حمزة 🚀</h1>
-            <p class="hero-subtitle">هذا الموقع يعمل بنجاح على GitHub Pages - تم التطوير بحب ❤️</p>
-        </div>
-        
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>سريع</h3>
-                <p>موقع سريع الاستجابة</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h3>متجاوب</h3>
-                <p>يعمل على جميع الأجهزة</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎨</div>
-                <h3>حديث</h3>
-                <p>تصميم عصري وجذاب</p>
-            </div>
-        </div>
+<div class="wrapper">
+  <header>
+    <div class="badge">SEQUENCE DIAGRAM</div>
+    <h1>User <span>Authentication</span> Flow</h1>
+    <p class="subtitle">Interactive sequence diagram · Click play or step through manually</p>
+  </header>
 
-        <div class="quick-links">
-            <h2>استكشف الموقع</h2>
-            <div class="links-grid">
-                <a href="pages/portfolio.html" class="quick-link">
-                    <span class="icon">💼</span>
-                    <span>معرض الأعمال</span>
-                </a>
-                <a href="services.html" class="quick-link">
-                    <span class="icon">🔧</span>
-                    <span>الخدمات</span>
-                </a>
-                <a href="contact.html" class="quick-link">
-                    <span class="icon">📞</span>
-                    <span>اتصل بنا</span>
-                </a>
-                <a href="home.html" class="quick-link">
-                    <span class="icon">📄</span>
-                    <span>صفحة Home</span>
-                </a>
-            </div>
-        </div>
+  <div class="controls">
+    <button class="btn btn-primary" id="playBtn" onclick="togglePlay()">▶ Play</button>
+    <button class="btn btn-ghost" onclick="stepForward()">Step →</button>
+    <button class="btn btn-ghost" onclick="resetDiagram()">↺ Reset</button>
+    <div class="scenario-picker">
+      <button class="scenario-btn active" onclick="loadScenario('success', this)">✓ Success</button>
+      <button class="scenario-btn" onclick="loadScenario('mfa', this)">🔐 MFA Flow</button>
+      <button class="scenario-btn" onclick="loadScenario('fail', this)">✗ Auth Failed</button>
     </div>
+  </div>
 
-    <footer class="footer">
-        <p>© 2024 موقع حمزة. تم التطوير بحب ❤️</p>
-    </footer>
+  <div class="diagram-card">
+    <div class="diagram-topbar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+      <span class="topbar-title" id="scenarioLabel">auth-flow.seq — success scenario</span>
+    </div>
+    <div class="diagram-body">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+      <div class="participants-row" id="participantsRow"></div>
+      <div style="position:relative; margin-top:0;" id="lifelinesContainer"></div>
+      <div class="messages-area" id="messagesArea" style="padding-top:8px;"></div>
+
+      <div class="detail-panel" id="detailPanel">
+        <div class="detail-step-num">READY</div>
+        <div class="detail-title">Press Play to animate</div>
+        <div class="detail-desc">Step through the sequence to see each message explained in detail.</div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <svg width="28" height="8"><line x1="0" y1="4" x2="28" y2="4" stroke="#38bdf8" stroke-width="1.5"/><polygon points="22,1 28,4 22,7" fill="#38bdf8"/></svg>
+          Synchronous call
+        </div>
+        <div class="legend-item">
+          <svg width="28" height="8"><line x1="0" y1="4" x2="28" y2="4" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="4,3"/><polygon points="22,1 28,4 22,7" fill="#818cf8"/></svg>
+          Return / Response
+        </div>
+        <div class="legend-item">
+          <svg width="28" height="8"><line x1="0" y1="4" x2="28" y2="4" stroke="#f87171" stroke-width="1.5"/><polygon points="22,1 28,4 22,7" fill="#f87171"/></svg>
+          Error
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SCENARIOS = {
+  success: {
+    label: 'auth-flow.seq — success scenario',
+    participants: [
+      { id: 'client',  label: 'Browser',       sublabel: ':Client',      color: '#38bdf8', border: '#38bdf8' },
+      { id: 'gateway', label: 'API Gateway',    sublabel: ':Gateway',     color: '#818cf8', border: '#818cf8' },
+      { id: 'auth',    label: 'Auth Service',   sublabel: ':AuthService', color: '#34d399', border: '#34d399' },
+      { id: 'db',      label: 'Database',       sublabel: ':PostgreSQL',  color: '#fb923c', border: '#fb923c' },
+    ],
+    steps: [
+      { from: 0, to: 1, label: 'POST /login {email, password}', type: 'sync', color: '#38bdf8',
+        title: 'Login Request', desc: 'Browser sends credentials to the API Gateway over HTTPS.', code: 'POST /api/v1/login  →  HTTP 200' },
+      { from: 1, to: 2, label: 'validateCredentials(email, pwd)', type: 'sync', color: '#818cf8',
+        title: 'Forward to Auth Service', desc: 'Gateway forwards the request after rate-limit and schema validation.', code: 'validateCredentials(email, hashedPwd)' },
+      { from: 2, to: 3, label: 'SELECT user WHERE email=?', type: 'sync', color: '#34d399',
+        title: 'Database Lookup', desc: 'Auth Service queries the users table using a parameterised query to prevent SQLi.', code: "SELECT id, pwd_hash, roles FROM users WHERE email = $1" },
+      { from: 3, to: 2, label: '{ user_row }', type: 'return', color: '#fb923c',
+        title: 'User Record Returned', desc: 'Database returns the matching user row including bcrypt password hash and roles.', code: '{ id: 42, pwd_hash: "$2b$...", roles: ["user"] }' },
+      { from: 2, to: 2, label: 'bcrypt.compare(pwd, hash)', type: 'self', color: '#34d399',
+        title: 'Password Verification', desc: 'Auth Service runs bcrypt.compare() locally — the plaintext password never leaves this service.', code: 'bcrypt.compare(plaintext, hash)  →  true' },
+      { from: 2, to: 2, label: 'jwt.sign(payload, secret)', type: 'self', color: '#34d399',
+        title: 'JWT Minting', desc: 'A signed JWT is created with a 1-hour expiry containing user ID and roles.', code: 'jwt.sign({ sub: 42, roles }, SECRET, { expiresIn: "1h" })' },
+      { from: 2, to: 1, label: '{ token: "eyJ..." }', type: 'return', color: '#818cf8',
+        title: 'Token Returned to Gateway', desc: 'Auth Service hands the JWT back to the Gateway.', code: 'HTTP 200  { token: "eyJhbGciOiJIUzI1NiJ9..." }' },
+      { from: 1, to: 0, label: 'Set-Cookie: session=<jwt>; HttpOnly', type: 'return', color: '#38bdf8',
+        title: 'Session Cookie Set', desc: 'Gateway wraps the JWT in an HttpOnly, Secure cookie and sends it to the browser.', code: 'Set-Cookie: session=<jwt>; HttpOnly; Secure; SameSite=Strict' },
+    ]
+  },
+  mfa: {
+    label: 'auth-flow.seq — MFA flow',
+    participants: [
+      { id: 'client',  label: 'Browser',       sublabel: ':Client',      color: '#38bdf8', border: '#38bdf8' },
+      { id: 'gateway', label: 'API Gateway',    sublabel: ':Gateway',     color: '#818cf8', border: '#818cf8' },
+      { id: 'auth',    label: 'Auth Service',   sublabel: ':AuthService', color: '#34d399', border: '#34d399' },
+      { id: 'totp',    label: 'TOTP Service',   sublabel: ':TOTP',        color: '#fb923c', border: '#fb923c' },
+    ],
+    steps: [
+      { from: 0, to: 1, label: 'POST /login {email, password}', type: 'sync', color: '#38bdf8',
+        title: 'Initial Login', desc: 'User submits credentials. Gateway validates schema and rate limits.', code: 'POST /api/v1/login' },
+      { from: 1, to: 2, label: 'validateCredentials()', type: 'sync', color: '#818cf8',
+        title: 'Credential Check', desc: 'Auth Service validates password. User has MFA enabled.', code: 'user.mfa_enabled === true  →  challenge required' },
+      { from: 2, to: 1, label: '{ status: "mfa_required", challenge_id }', type: 'return', color: '#34d399',
+        title: 'MFA Challenge Issued', desc: 'Auth Service returns a short-lived challenge token instead of a full JWT.', code: 'HTTP 202  { status: "mfa_required", challenge_id: "ch_abc" }' },
+      { from: 1, to: 0, label: '302 → /mfa-prompt', type: 'return', color: '#818cf8',
+        title: 'Redirect to MFA Screen', desc: 'Gateway redirects browser to the MFA entry screen.', code: 'HTTP 302  Location: /mfa-prompt?ch=ch_abc' },
+      { from: 0, to: 1, label: 'POST /mfa/verify {challenge_id, otp}', type: 'sync', color: '#38bdf8',
+        title: 'OTP Submitted', desc: 'User enters 6-digit TOTP code from authenticator app.', code: 'POST /api/v1/mfa/verify  { challenge_id, otp: "482910" }' },
+      { from: 1, to: 2, label: 'verifyOTP(challenge_id, otp)', type: 'sync', color: '#818cf8',
+        title: 'OTP Validation', desc: 'Gateway forwards to Auth Service which calls TOTP microservice.', code: 'authService.verifyOTP(challenge_id, otp)' },
+      { from: 2, to: 3, label: 'validate(secret, otp, window=1)', type: 'sync', color: '#34d399',
+        title: 'TOTP Verification', desc: 'TOTP Service checks the OTP against the user\'s stored TOTP secret with a 30s window.', code: 'totp.validate({ secret, token: otp, window: 1 })' },
+      { from: 3, to: 2, label: '{ valid: true }', type: 'return', color: '#fb923c',
+        title: 'OTP Valid', desc: 'TOTP Service confirms the one-time password is correct and within the time window.', code: '{ valid: true, delta: 0 }' },
+      { from: 2, to: 1, label: '{ token: "eyJ..." }', type: 'return', color: '#34d399',
+        title: 'Full JWT Issued', desc: 'Auth Service mints the full session JWT now that both factors are verified.', code: 'HTTP 200  { token: "eyJhbGciOiJIUzI1NiJ9..." }' },
+      { from: 1, to: 0, label: 'Set-Cookie: session=<jwt>; HttpOnly', type: 'return', color: '#818cf8',
+        title: 'Authenticated', desc: 'Session cookie set. User is fully authenticated with MFA.', code: 'Set-Cookie: session=<jwt>; HttpOnly; Secure' },
+    ]
+  },
+  fail: {
+    label: 'auth-flow.seq — authentication failed',
+    participants: [
+      { id: 'client',  label: 'Browser',       sublabel: ':Client',      color: '#38bdf8', border: '#38bdf8' },
+      { id: 'gateway', label: 'API Gateway',    sublabel: ':Gateway',     color: '#818cf8', border: '#818cf8' },
+      { id: 'auth',    label: 'Auth Service',   sublabel: ':AuthService', color: '#34d399', border: '#34d399' },
+      { id: 'db',      label: 'Database',       sublabel: ':PostgreSQL',  color: '#fb923c', border: '#fb923c' },
+    ],
+    steps: [
+      { from: 0, to: 1, label: 'POST /login {email, password}', type: 'sync', color: '#38bdf8',
+        title: 'Login Attempt', desc: 'Browser sends credentials. This is the 3rd failed attempt in 5 minutes.', code: 'POST /api/v1/login  X-Attempt-Count: 3' },
+      { from: 1, to: 1, label: 'checkRateLimit(ip, email)', type: 'self', color: '#818cf8',
+        title: 'Rate Limit Check', desc: 'Gateway checks a Redis sliding-window counter for this IP + email combination.', code: 'redis.get("rl:ip:email")  →  count: 3 (limit: 5)' },
+      { from: 1, to: 2, label: 'validateCredentials(email, pwd)', type: 'sync', color: '#818cf8',
+        title: 'Validate Credentials', desc: 'Still under rate limit, so Gateway forwards to Auth Service.', code: 'validateCredentials(email, hashedPwd)' },
+      { from: 2, to: 3, label: 'SELECT user WHERE email=?', type: 'sync', color: '#34d399',
+        title: 'Database Lookup', desc: 'Auth Service queries for the user record.', code: "SELECT id, pwd_hash FROM users WHERE email = $1" },
+      { from: 3, to: 2, label: '{ user_row }', type: 'return', color: '#fb923c',
+        title: 'Record Found', desc: 'User exists. Auth Service proceeds to password comparison.', code: '{ id: 42, pwd_hash: "$2b$..." }' },
+      { from: 2, to: 2, label: 'bcrypt.compare()  →  FALSE', type: 'self', color: '#f87171',
+        title: 'Password Mismatch', desc: 'bcrypt.compare() returns false — the submitted password is wrong.', code: 'bcrypt.compare(plaintext, hash)  →  false' },
+      { from: 2, to: 3, label: 'incrementFailureCount(user_id)', type: 'sync', color: '#f87171',
+        title: 'Log Failure', desc: 'Auth Service increments the failed attempt counter for audit logging.', code: "UPDATE users SET failed_attempts = failed_attempts + 1 WHERE id = $1" },
+      { from: 3, to: 2, label: 'OK', type: 'return', color: '#fb923c',
+        title: 'Counter Updated', desc: 'Database confirms the failure log update.', code: 'UPDATE 1' },
+      { from: 2, to: 1, label: 'AuthError(INVALID_CREDENTIALS)', type: 'error', color: '#f87171',
+        title: 'Error Propagated', desc: 'Auth Service throws a generic error — deliberately vague to prevent user enumeration.', code: 'throw AuthError("invalid_credentials")  // never "wrong password"' },
+      { from: 1, to: 0, label: 'HTTP 401 { error: "invalid_credentials" }', type: 'error', color: '#f87171',
+        title: '401 Unauthorized', desc: 'Gateway returns a 401. The vague message prevents attackers from knowing whether the account exists.', code: 'HTTP 401  { error: "invalid_credentials", retry_after: null }' },
+    ]
+  }
+};
+
+let currentScenario = 'success';
+let currentStep = -1;
+let isPlaying = false;
+let playTimer = null;
+
+function getScenario() { return SCENARIOS[currentScenario]; }
+
+function renderParticipants() {
+  const s = getScenario();
+  const row = document.getElementById('participantsRow');
+  const lc = document.getElementById('lifelinesContainer');
+  row.innerHTML = '';
+  lc.innerHTML = '';
+
+  // We'll render participants and lifelines together via absolute positioning
+  // For simplicity, use a relative container that spans diagram width
+  row.style.position = 'relative';
+
+  s.participants.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'participant';
+    div.id = 'participant-' + i;
+    div.innerHTML = `
+      <div class="participant-box" style="background:${p.color}18; border-color:${p.border}; color:${p.color};">
+        ${p.label}
+      </div>
+      <div class="participant-label">${p.sublabel}</div>
+    `;
+    row.appendChild(div);
+  });
+}
+
+function getParticipantX(index, totalWidth, count) {
+  const margin = 60;
+  const usable = totalWidth - margin * 2;
+  return margin + (usable / (count - 1)) * index;
+}
+
+function renderSteps() {
+  const s = getScenario();
+  const area = document.getElementById('messagesArea');
+  area.innerHTML = '';
+
+  s.steps.forEach((step, idx) => {
+    const div = document.createElement('div');
+    div.className = 'step';
+    div.id = 'step-' + idx;
+
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const isSelf = step.from === step.to;
+
+    div.innerHTML = `
+      <div class="arrow-row">
+        <span class="step-meta">${idx + 1}</span>
+        <svg class="arrow-svg" id="svg-${idx}" viewBox="0 0 800 52" preserveAspectRatio="none"></svg>
+      </div>
+    `;
+    area.appendChild(div);
+
+    // Draw arrow after DOM insertion
+    requestAnimationFrame(() => {
+      drawArrow(idx, step, s.participants.length);
+    });
+  });
+}
+
+function drawArrow(idx, step, count) {
+  const svg = document.getElementById('svg-' + idx);
+  if (!svg) return;
+  const W = 800, H = 52;
+  const margin = 60;
+  const usable = W - margin * 2;
+  const step_w = count > 1 ? usable / (count - 1) : usable;
+
+  const x1 = margin + (usable / (count - 1)) * step.from;
+  const x2 = margin + (usable / (count - 1)) * step.to;
+  const y = H / 2;
+  const color = step.color;
+  const isDashed = step.type === 'return';
+  const isError = step.type === 'error';
+  const isSelf = step.from === step.to;
+
+  const svgNS = 'http://www.w3.org/2000/svg';
+  svg.innerHTML = '';
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  if (isSelf) {
+    // Self-call arc
+    const path = document.createElementNS(svgNS, 'path');
+    const r = 28;
+    path.setAttribute('d', `M ${x1} ${y - 8} Q ${x1 + 70} ${y - 8} ${x1 + 70} ${y} Q ${x1 + 70} ${y + 14} ${x1} ${y + 14}`);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', color);
+    path.setAttribute('stroke-width', '1.5');
+    if (isDashed) path.setAttribute('stroke-dasharray', '4,3');
+    svg.appendChild(path);
+
+    // arrowhead
+    const arr = document.createElementNS(svgNS, 'polygon');
+    arr.setAttribute('points', `${x1 - 6},${y + 10} ${x1 + 2},${y + 14} ${x1 - 6},${y + 18}`);
+    arr.setAttribute('fill', color);
+    svg.appendChild(arr);
+
+    // label
+    const text = document.createElementNS(svgNS, 'text');
+    text.setAttribute('x', x1 + 78);
+    text.setAttribute('y', y + 4);
+    text.setAttribute('fill', color);
+    text.setAttribute('font-family', 'JetBrains Mono, monospace');
+    text.setAttribute('font-size', '11');
+    text.textContent = step.label;
+    svg.appendChild(text);
+
+  } else {
+    const goRight = x2 > x1;
+    const ax = goRight ? x2 - 10 : x2 + 10;
+
+    // line
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y);
+    line.setAttribute('x2', ax); line.setAttribute('y2', y);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', '1.5');
+    if (isDashed) line.setAttribute('stroke-dasharray', '5,4');
+    svg.appendChild(line);
+
+    // arrowhead
+    const arr = document.createElementNS(svgNS, 'polygon');
+    if (goRight) {
+      arr.setAttribute('points', `${ax},${y - 5} ${x2},${y} ${ax},${y + 5}`);
+    } else {
+      arr.setAttribute('points', `${ax},${y - 5} ${x2},${y} ${ax},${y + 5}`);
+    }
+    arr.setAttribute('fill', color);
+    svg.appendChild(arr);
+
+    // label
+    const midX = (x1 + x2) / 2;
+    const text = document.createElementNS(svgNS, 'text');
+    text.setAttribute('x', midX);
+    text.setAttribute('y', y - 8);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('fill', color);
+    text.setAttribute('font-family', 'JetBrains Mono, monospace');
+    text.setAttribute('font-size', '11');
+    text.textContent = step.label;
+    svg.appendChild(text);
+  }
+
+  // Lifelines (vertical dashed lines behind arrows)
+  const participants = getScenario().participants;
+  participants.forEach((_, i) => {
+    const lx = margin + (usable / (count - 1)) * i;
+    const ll = document.createElementNS(svgNS, 'line');
+    ll.setAttribute('x1', lx); ll.setAttribute('y1', 0);
+    ll.setAttribute('x2', lx); ll.setAttribute('y2', H);
+    ll.setAttribute('stroke', '#1e293b');
+    ll.setAttribute('stroke-width', '1');
+    ll.setAttribute('stroke-dasharray', '6,5');
+    svg.insertBefore(ll, svg.firstChild);
+  });
+}
+
+function showStep(idx) {
+  const s = getScenario();
+  const el = document.getElementById('step-' + idx);
+  if (el) el.classList.add('visible');
+
+  // Update detail panel
+  const step = s.steps[idx];
+  const panel = document.getElementById('detailPanel');
+  panel.innerHTML = `
+    <div class="detail-step-num">STEP ${idx + 1} / ${s.steps.length}</div>
+    <div class="detail-title">${step.title}</div>
+    <div class="detail-desc">${step.desc}</div>
+    ${step.code ? `<div class="detail-code">${step.code}</div>` : ''}
+  `;
+
+  // Progress
+  const pct = ((idx + 1) / s.steps.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function stepForward() {
+  const s = getScenario();
+  if (currentStep < s.steps.length - 1) {
+    currentStep++;
+    showStep(currentStep);
+  }
+}
+
+function togglePlay() {
+  if (isPlaying) {
+    clearInterval(playTimer);
+    isPlaying = false;
+    document.getElementById('playBtn').textContent = '▶ Play';
+  } else {
+    isPlaying = true;
+    document.getElementById('playBtn').textContent = '⏸ Pause';
+    playTimer = setInterval(() => {
+      const s = getScenario();
+      if (currentStep >= s.steps.length - 1) {
+        clearInterval(playTimer);
+        isPlaying = false;
+        document.getElementById('playBtn').textContent = '▶ Play';
+      } else {
+        currentStep++;
+        showStep(currentStep);
+      }
+    }, 900);
+  }
+}
+
+function resetDiagram() {
+  clearInterval(playTimer);
+  isPlaying = false;
+  currentStep = -1;
+  document.getElementById('playBtn').textContent = '▶ Play';
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('visible'));
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('detailPanel').innerHTML = `
+    <div class="detail-step-num">READY</div>
+    <div class="detail-title">Press Play to animate</div>
+    <div class="detail-desc">Step through the sequence to see each message explained in detail.</div>
+  `;
+}
+
+function loadScenario(name, btn) {
+  clearInterval(playTimer);
+  isPlaying = false;
+  currentStep = -1;
+  currentScenario = name;
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('scenarioLabel').textContent = SCENARIOS[name].label;
+  document.getElementById('playBtn').textContent = '▶ Play';
+  renderParticipants();
+  renderSteps();
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('detailPanel').innerHTML = `
+    <div class="detail-step-num">READY</div>
+    <div class="detail-title">Press Play to animate</div>
+    <div class="detail-desc">Step through the sequence to see each message explained in detail.</div>
+  `;
+}
+
+// Init
+renderParticipants();
+renderSteps();
+
+window.addEventListener('resize', () => {
+  renderSteps();
+  // Re-show visible steps
+  document.querySelectorAll('.step.visible').forEach(el => {
+    el.classList.remove('visible');
+    requestAnimationFrame(() => el.classList.add('visible'));
+  });
+});
+</script>
 </body>
 </html>
